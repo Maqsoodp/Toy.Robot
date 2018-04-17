@@ -1,0 +1,17 @@
+**/[Oo]bj/
+**/[Bb]in/
+**/obj/
+**/bin/
+packages/
+artifacts/
+PublishProfiles/
+.vs/
+.vscode/
+bower_components/
+node_modules/
+**/wwwroot/
+*.lock.json
+*.user
+*.suo
+*.cache
+*.rej
