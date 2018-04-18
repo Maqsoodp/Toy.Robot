@@ -42,8 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Command\Invoker.cs" />
+    <Compile Include="Command\Command.cs" />
     <Compile Include="Command\IToyRobot.cs" />
     <Compile Include="Command\LeftCommand.cs" />
     <Compile Include="Command\MoveCommand.cs" />

@@ -7,7 +7,7 @@ using Toy.Robot.Model;
 namespace Toy.Robot
 {
     
-    internal class CommandProcessor
+    public class CommandProcessor
     {
         private readonly IToyRobot _toyRobot;
         private readonly Command.Command _moveCommand;
@@ -24,8 +24,9 @@ namespace Toy.Robot
             this._reportCommand = new ReportCommand(this._toyRobot);
         }
 
-        internal void Run(string[] args)
+        public Report Run(string[] args)
         {
+            Report report = null;
             if (args != null && args.Length > 0)
             {
                 string command = args[0];
@@ -36,24 +37,24 @@ namespace Toy.Robot
 
                         if (int.TryParse(args[1], out int x) && int.TryParse(args[2], out int y))
                         {
-                            new PlaceCommand(this._toyRobot, new Point(x, y), args[3]).Execute();
+                            report = new PlaceCommand(this._toyRobot, new Point(x, y), args[3]).Execute();
                         }
                         break;
 
                     case "move":
-                        this._moveCommand.Execute();
+                        report = this._moveCommand.Execute();
                         break;
 
                     case "left":
-                        this._leftCommand.Execute();
+                        report = this._leftCommand.Execute();
                         break;
 
                     case "right":
-                        this._rightCommand.Execute();
+                        report = this._rightCommand.Execute();
                         break;
 
                     case "report":
-                        this._reportCommand.Execute();
+                        report = this._reportCommand.Execute();
                         break;
 
                     default:
@@ -61,6 +62,8 @@ namespace Toy.Robot
                         break;
                 }
             }
+
+            return report;
         }
     }
 }

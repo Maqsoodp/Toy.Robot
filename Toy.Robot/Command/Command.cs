@@ -13,6 +13,6 @@ namespace Toy.Robot.Command
             this._toyRobot = toyRobot;
         }
 
-        public abstract void Execute();
+        public abstract Report Execute();
     }
 }

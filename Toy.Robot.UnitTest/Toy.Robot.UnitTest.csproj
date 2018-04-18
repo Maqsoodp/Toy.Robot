@@ -52,10 +52,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandProcessorTest.cs" />
     <Compile Include="TestLeftScenarios.cs" />
     <Compile Include="TestMoveScenarios.cs" />
     <Compile Include="TestPlaceScenarios.cs" />
-    <Compile Include="TestReportScenarios.cs" />
     <Compile Include="TestRightScenarios.cs" />
     <Compile Include="ToyRobotTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

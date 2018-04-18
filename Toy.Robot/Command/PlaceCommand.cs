@@ -15,9 +15,9 @@ namespace Toy.Robot.Command
             this._face = face;
         }
 
-        public override void Execute()
+        public override Report Execute()
         {
-            this._toyRobot.Place(this._point, this._face);
+            return this._toyRobot.Place(this._point, this._face);
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Toy.Robot.Command
         {
         }
 
-        public override void Execute()
+        public override Report Execute()
         {
-            this._toyRobot.Move();
+            return this._toyRobot.Move();
         }
     }
 }
