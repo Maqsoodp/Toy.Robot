@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Toy.Robot
+namespace Toy.Robot.Command
 {
-    public class ToyRobot
+    public class ToyRobot : IToyRobot
     {
 
         //private IDictionary<Point, string[]> northRowWhiteList;
