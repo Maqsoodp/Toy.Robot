@@ -35,7 +35,7 @@ namespace Toy.Robot
                     }
                     else
                     {
-                        processor.Run(commands.Split(" "));
+                        processor.Run(commands.Split(' '));
                     }
                 }
                 

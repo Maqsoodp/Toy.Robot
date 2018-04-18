@@ -7,12 +7,6 @@ namespace Toy.Robot.Command
     public class ToyRobot : IToyRobot
     {
 
-        //private IDictionary<Point, string[]> northRowWhiteList;
-        //private IDictionary<Point, string[]> southRowWhiteList;
-        //private IDictionary<Point, string[]> eastColumnWhiteList;
-        //private IDictionary<Point, string[]> westColumnWhiteList;
-        // private int[,] results = new int[5, 5];
-
         private int sizeX = 5;
         private int sizeY = 5;
         private IDictionary<Point, string[]> circularWhiteList;
@@ -46,35 +40,6 @@ namespace Toy.Robot.Command
                 circularWhiteList.Add(new Point(i, columns - 1), new string[3] { "North", "West", "South" });
             }
 
-
-            //northRowWhiteList = new Dictionary<Point, string[]>();
-            //northRowWhiteList.Add(new Point(0, 0), new string[2] { "South", "East" });
-            //northRowWhiteList.Add(new Point(0, 1), new string[3] { "South", "East", "West" });
-            //northRowWhiteList.Add(new Point(0, 2), new string[3] { "South", "East", "West" });
-            //northRowWhiteList.Add(new Point(0, 3), new string[3] { "South", "East", "West" });
-            //northRowWhiteList.Add(new Point(0, 4), new string[2] { "South", "West" });
-
-            //southRowWhiteList = new Dictionary<Point, string[]>();
-            //southRowWhiteList.Add(new Point(4, 0), new string[2] { "North", "East" });
-            //southRowWhiteList.Add(new Point(4, 1), new string[3] { "North", "East", "West" });
-            //southRowWhiteList.Add(new Point(4, 2), new string[3] { "North", "East", "West" });
-            //southRowWhiteList.Add(new Point(4, 3), new string[3] { "North", "East", "West" });
-            //southRowWhiteList.Add(new Point(4, 4), new string[2] { "North", "West" });
-
-            //eastColumnWhiteList = new Dictionary<Point, string[]>();
-            //// eastColumnWhiteList.Add(new Point(0, 0), new string[2] { "South", "East" });
-            //eastColumnWhiteList.Add(new Point(1, 0), new string[3] { "North", "East", "South" });
-            //eastColumnWhiteList.Add(new Point(2, 0), new string[3] { "North", "East", "South" });
-            //eastColumnWhiteList.Add(new Point(3, 0), new string[3] { "North", "East", "South" });
-            ////eastColumnWhiteList.Add(new Point(4, 0), new string[2] { "North", "East" });
-
-            //westColumnWhiteList = new Dictionary<Point, string[]>();
-            //// westColumnWhiteList.Add(new Point(0, 4), new string[2] { "South", "West" });
-            //westColumnWhiteList.Add(new Point(1, 4), new string[3] { "North", "West", "South" });
-            //westColumnWhiteList.Add(new Point(2, 4), new string[3] { "North", "West", "South" });
-            //westColumnWhiteList.Add(new Point(3, 4), new string[3] { "North", "West", "South" });
-            ////westColumnWhiteList.Add(new Point(4, 4), new string[2] { "North", "West" });
-
         }
 
         public ToyRobot(int rows, int columns)
@@ -85,9 +50,30 @@ namespace Toy.Robot.Command
             this.report = new Report();
         }
 
-        public void Place(Point point, string face)
+        public Report Place(Point point, string face)
         {
+            if (point == null)
+            {
+                point = new Point();
+            }
+
+            if (string.IsNullOrWhiteSpace(face))
+            {
+                face = "North";
+            }
+
+            if (point.x < 0 || point.x > this.sizeX - 1)
+            {
+                throw new Exception($"Toy robot should be placed with in the table {sizeX} {sizeY}");
+            }
+
+            if (point.y < 0 || point.y > this.sizeY - 1)
+            {
+                throw new Exception($"Toy robot should be placed with in the table {sizeX} {sizeY}");
+            }
+
             this.report = new Report(point, face);
+            return this.report;
         }
 
         private void MoveEast()
@@ -120,7 +106,7 @@ namespace Toy.Robot.Command
 
         }
 
-        public void Move()
+        public Report Move()
         {
             var currentFace = this.report.Face;
             var point = this.report.Point;
@@ -138,6 +124,8 @@ namespace Toy.Robot.Command
                 this.CallMove();
             }
 
+            return this.report;
+
         }
 
         private string GetNextValueOnRotateLeft(string currentFace)
@@ -152,10 +140,11 @@ namespace Toy.Robot.Command
                 default: return currentFace;
             }
         }
-        public void Left()
+        public Report Left()
         {
             var currentFace = this.report.Face;
             this.report.Face = this.GetNextValueOnRotateLeft(currentFace);
+            return this.report;
         }
 
         private string GetNextValueOnRotateRight(string currentFace)
@@ -170,16 +159,18 @@ namespace Toy.Robot.Command
             }
         }
 
-        public void Right()
+        public Report Right()
         {
             var currentFace = this.report.Face;
             this.report.Face = this.GetNextValueOnRotateRight(currentFace);
+            return this.report;
         }
 
-        public void Report()
+        public Report Report()
         {
             var point = this.report.Point;
             Console.WriteLine($"{point.x} {point.y} {this.report.Face}");
+            return this.report;
         }
     }
 }

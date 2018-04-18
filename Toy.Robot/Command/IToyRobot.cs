@@ -6,13 +6,13 @@ namespace Toy.Robot.Command
 {
     public interface IToyRobot
     {
-        void Place(Point point, string face);
+        Report Place(Point point, string face);
 
-        void Move();
+        Report Move();
 
-        void Left();
-        void Right();
+        Report Left();
+        Report Right();
 
-        void Report();
+        Report Report();
     }
 }
