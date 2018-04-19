@@ -68,7 +68,7 @@ namespace Toy.Robot.UnitTest
             Assert.NotNull(report.Point);
             Assert.AreEqual(report.Point.x, 0);
             Assert.AreEqual(report.Point.y, 0);
-            Assert.AreEqual(report.Face, "North");
+            Assert.AreEqual(report.Face, "NORTH");
 
         }
 

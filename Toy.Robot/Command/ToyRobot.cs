@@ -59,7 +59,7 @@ namespace Toy.Robot.Command
 
             if (string.IsNullOrWhiteSpace(face))
             {
-                face = "North";
+                face = "NORTH";
             }
 
             if (point.x < 0 || point.x > this.sizeX - 1)
@@ -96,12 +96,12 @@ namespace Toy.Robot.Command
         private void CallMove()
         {
             var currentFace = this.report.Face;
-            switch (currentFace)
+            switch (currentFace.ToLower())
             {
-                case "East": this.MoveEast(); break;
-                case "West": this.MoveWest(); break;
-                case "North": this.MoveNorth(); break;
-                case "South": this.MoveSouth(); break;
+                case "east": this.MoveEast(); break;
+                case "west": this.MoveWest(); break;
+                case "north": this.MoveNorth(); break;
+                case "south": this.MoveSouth(); break;
             }
 
         }
@@ -113,7 +113,7 @@ namespace Toy.Robot.Command
 
             if (this.circularWhiteList.TryGetValue(this.report.Point, out var possibleDirection))
             {
-                var validMove = Array.Find(possibleDirection, p => p.Equals(currentFace));
+                var validMove = Array.Find(possibleDirection, p => p.Equals(currentFace, StringComparison.OrdinalIgnoreCase));
                 if (validMove != null && validMove.Length > 0)
                 {
                     this.CallMove();
@@ -131,12 +131,12 @@ namespace Toy.Robot.Command
         private string GetNextValueOnRotateLeft(string currentFace)
         {
 
-            switch (currentFace)
+            switch (currentFace.ToLower())
             {
-                case "North": return "West";
-                case "East": return "North";
-                case "West": return "South";
-                case "South": return "East";
+                case "north": return "WEST";
+                case "east": return "NORTH";
+                case "west": return "SOUTH";
+                case "south": return "EAST";
                 default: return currentFace;
             }
         }
@@ -149,12 +149,12 @@ namespace Toy.Robot.Command
 
         private string GetNextValueOnRotateRight(string currentFace)
         {
-            switch (currentFace)
+            switch (currentFace.ToLower())
             {
-                case "North": return "East";
-                case "East": return "South";
-                case "West": return "North";
-                case "South": return "West";
+                case "north": return "EAST";
+                case "east": return "SOUTH";
+                case "west": return "NORTH";
+                case "south": return "WEST";
                 default: return currentFace;
             }
         }
@@ -169,7 +169,7 @@ namespace Toy.Robot.Command
         public Report Report()
         {
             var point = this.report.Point;
-            Console.WriteLine($"{point.x} {point.y} {this.report.Face}");
+            Console.WriteLine($"{point.x} {point.y} {this.report.Face.ToUpper()}");
             return this.report;
         }
     }

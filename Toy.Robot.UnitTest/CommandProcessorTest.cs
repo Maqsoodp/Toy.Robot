@@ -30,7 +30,47 @@ namespace Toy.Robot.UnitTest
             Assert.NotNull(report.Point);
             Assert.AreEqual(report.Point.x, expectedX);
             Assert.AreEqual(report.Point.y, expectedY);
-            Assert.AreEqual(report.Face, expectedFace);
+            Assert.AreEqual(report.Face, expectedFace.ToUpper());
+        }
+
+
+        [TestCase(5, -5, "column", -5)]
+        [TestCase(-5, -5, "row", -5)]
+        [TestCase(-5, 5, "row", -5)]
+        public void TestCommandProcessor_WithNegativeSize(int tableSizeX, int tableSizeY, string errorSide, int errorValue)
+        {
+            // Act
+            var ex = Assert.Throws
+                   <Exception>(
+                       () => new CommandProcessor(tableSizeX, tableSizeY)
+                   );
+
+            // Assert
+
+            Assert.That(ex, Is.Not.Null);
+            Assert.AreEqual(ex.Message, $"Table {errorSide} value should be positive {errorValue}");
+
+        }
+
+        [TestCase(5, 5, "place 1 2 nrth", "Provide valid face: North,East,West,South")]
+        [TestCase(5, 5, "place a,b nrth", "Invalid place command: Use E.g. place 0 0 East")]
+        [TestCase(5, 5, "place a b north", "provide valid numeric value")]
+        [TestCase(5, 5, "place 6 6 north", "Toy robot should be placed with in the table 5 5")]
+        [TestCase(5, 5, "place -2 -6 north", "Toy robot should be placed with in the table 5 5")]
+        [TestCase(5, 5, "plce 2 2 north", "Not a valid command")]
+        public void TestCommandProcessor_validatePlaceCommands(int tableSizeX, int tableSizeY, string command, string expectdMsg)
+        {
+            // Act
+            var ex = Assert.Throws
+                   <Exception>(
+                       () => new CommandProcessor(tableSizeX, tableSizeY).Run(command.Trim().Split(' '))
+                   );
+
+            // Assert
+
+            Assert.That(ex, Is.Not.Null);
+            Assert.AreEqual(ex.Message, expectdMsg);
+
         }
     }
 }

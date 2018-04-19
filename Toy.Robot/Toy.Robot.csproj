@@ -50,7 +50,7 @@
     <Compile Include="Command\ReportCommand.cs" />
     <Compile Include="Command\RightCommand.cs" />
     <Compile Include="Command\ToyRobot.cs" />
-    <Compile Include="Model\CommandProcessor.cs" />
+    <Compile Include="CommandProcessor.cs" />
     <Compile Include="Model\Commands.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Model\PointEqualityComparer.cs" />

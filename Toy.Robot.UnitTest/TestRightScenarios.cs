@@ -26,7 +26,7 @@ namespace Toy.Robot.UnitTest
 
             Assert.AreEqual(report.Point.x, x);
             Assert.AreEqual(report.Point.y, y);
-            Assert.AreEqual(report.Face, expectedFace);
+            Assert.AreEqual(report.Face, expectedFace.ToUpper());
 
         }
     }

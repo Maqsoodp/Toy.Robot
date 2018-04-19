@@ -13,34 +13,69 @@ namespace Toy.Robot
 
             if(args.Length == 0)
             {
-                Console.WriteLine("Play Toy Robot with following commands -");
-                Console.WriteLine("Decide size of the Table by passing rows and columns E.g. 5 5");
-                Console.WriteLine("Place Toy at any x y position with Toy facing E.g.  0 0 North");
-                Console.WriteLine("Give Commands -  Move Left Right Report ");
+                Console.WriteLine("Toy Robot instructions -");
+                Console.WriteLine("Provide size of the table by passing rows and columns E.g. 5, 5");
+                Console.WriteLine("Place toy by provide x y position along with facing E.g.  place 0 0 North");
+                Console.WriteLine("Give Commands -  Move Left Right Report Exit");
             }
 
-            args = new string[] { "5", "5" };
-            var processor = new CommandProcessor(int.Parse(args[0]), int.Parse(args[1]));
-
-            var play = true;
-            while(play)
+            var size = true;
+            CommandProcessor commandProcessor = null;
+            while (size)
             {
-                var commands =  Console.ReadLine();
-                if(commands != null && commands.Length > 0)
+                Console.WriteLine("Please provide size of the Table E.g. 5, 5");
+                var sizeInfo = Console.ReadLine();
+                if (sizeInfo != null)
                 {
-
-                    if (commands.ToLower() == "exit")
+                    args = sizeInfo.Trim().Split(',');
+                    if (args != null && args.Length > 0)
                     {
-                        play = false;
-                    }
-                    else
-                    {
-                        processor.Run(commands.Split(' '));
+                        try
+                        {
+                            commandProcessor = new CommandProcessor(int.Parse(args[0]), int.Parse(args[1]));
+                            size = false;
+                        } catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        
                     }
                 }
-                
             }
-            
+
+            Console.WriteLine("Table activated");
+            Console.WriteLine("Place the toy using place command. E.g. place 0 0 North");
+            Console.WriteLine("To continue playing, provide commands - Move Left Right Report Exit");
+
+            if (commandProcessor != null)
+            {
+                var play = true;
+                while (play)
+                {
+                    var commands = Console.ReadLine();
+                    if (commands != null && commands.Length > 0)
+                    {
+
+                        if (commands.Trim().ToLower() == "exit")
+                        {
+                            play = false;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                commandProcessor.Run(commands.Trim().Split(' '));
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                           
+                        }
+                    }
+
+                }
+            }
         }
     }
 }
